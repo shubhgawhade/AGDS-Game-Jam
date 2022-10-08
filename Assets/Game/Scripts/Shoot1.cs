@@ -23,11 +23,11 @@ public class Shoot1 : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         if (!spawned)
         {
-            // Instantiate(bullets, transform.position, Quaternion.identity);
+            Instantiate(bullets, transform.position, transform.rotation);
             spawned = true;
 
             timer.Duration = 1f;

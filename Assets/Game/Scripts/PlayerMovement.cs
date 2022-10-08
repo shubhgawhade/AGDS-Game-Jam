@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -72,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
             // agent.SetDestination(currentDestination);
 
             transform.position = Vector3.Lerp(transform.position, currentDestination, distanceTime / dir.magnitude);
-            transform.position += movementSpeed * Time.deltaTime * dir;
+            GetComponent<Rigidbody>().MovePosition(transform.position + movementSpeed * Time.deltaTime * dir);
         }
         else
         {
@@ -82,6 +84,17 @@ public class PlayerMovement : MonoBehaviour
         if (move)
         {
             transform.localScale -= new Vector3(0, rateOfLoss, 0);
+        }
+        
+        
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Health"))
+        {
+            other.gameObject.SetActive(false);
+            gameObject.AddComponent<AddHealth>();
         }
     }
 }

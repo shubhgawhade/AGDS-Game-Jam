@@ -2,15 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Attacks : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
-    public int NumOfBullets;
-    public float Damage;
+    [SerializeField] private GameObject boxOfParts;
+    
+    public Vector3 lastDeath;
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        Instantiate(boxOfParts, lastDeath, Quaternion.identity);
     }
 
     // Update is called once per frame
