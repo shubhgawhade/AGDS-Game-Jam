@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] private GameObject mouseLoc;
+    
     public Vector3 currentDestination;
     private float startTime;
     private Vector3 dir;
@@ -31,6 +33,12 @@ public class PlayerMovement : MonoBehaviour
         
         if (Physics.Raycast(ray, out hit))
         {
+            // print((hit.point - transform.position).magnitude);
+            if ((hit.point - transform.position).magnitude < 9)
+            {
+                mouseLoc.transform.position = hit.point;
+            }
+            
             if (Input.GetMouseButtonDown(0) && hit.collider.CompareTag("Ground"))
             {
                 move = true;
