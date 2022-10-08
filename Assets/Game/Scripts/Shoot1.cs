@@ -42,13 +42,16 @@ public class Shoot1 : Attacks
                     case 2:
                         if (i == 0)
                         {
+                            print(transform.rotation);
+                            
                             // rot.y -= 30;
-                            // rot = Quaternion.Euler(transform.rotation.x, transform.rotation.y - 30, transform.rotation.z);
+                            rot = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y - 30, transform.eulerAngles.z);
+                            print(rot);
                         }
                         else
                         {
                             // rot.y += 30;
-                            // rot = Quaternion.Euler(transform.rotation.x, transform.rotation.y + 30, transform.rotation.z);
+                            rot = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y + 30, transform.eulerAngles.z);
                         }
                         break;
                 }
