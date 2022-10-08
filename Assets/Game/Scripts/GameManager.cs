@@ -21,7 +21,9 @@ public class GameManager : MonoBehaviour
         {
             foreach (Vector3 loc in lastDeath)
             {
+                // print("AAA");
                 Instantiate(boxOfParts, loc, Quaternion.identity);
+                firstRun = false;
             }
         }
     }

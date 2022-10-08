@@ -7,6 +7,8 @@ using Random = UnityEngine.Random;
 
 public class AICharacterControl1 : MonoBehaviour
 {
+    [SerializeField] private GameObject healthDrops;
+    
     public ThirdPersonCharacter character;
     private AISpawner ais;
     public int health;
@@ -14,8 +16,7 @@ public class AICharacterControl1 : MonoBehaviour
     private Rigidbody rb;
     private Timer timer;
 
-    public UnityEngine.AI.NavMeshAgent
-        agent { get; private set; } // the navmesh agent required for the
+    public NavMeshAgent agent { get; private set; } // the navmesh agent required for the
                                     // // the character we are controlling
     public Transform target; // target to aim for
 
@@ -87,6 +88,14 @@ public class AICharacterControl1 : MonoBehaviour
             timer.Run();
             rb.velocity = Vector3.zero;
             // rb.AddForce(Vector3.back * 20, ForceMode.Impulse);
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (!GameManager.isDead)
+        {
+            Instantiate(healthDrops, transform.position, Quaternion.identity);
         }
     }
 }

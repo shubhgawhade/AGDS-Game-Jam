@@ -5,12 +5,14 @@ using UnityEngine;
 public class AddHealth : MonoBehaviour
 {
     private Timer timer;
-    
-    private float RateOfReplenish = 0.02f;
+    public float RateOfReplenish;
+    private float rateOfReplenish = 0.002f;
 
     // Start is called before the first frame update
     void Start()
     {
+        rateOfReplenish = RateOfReplenish;
+        print(rateOfReplenish);
         timer = gameObject.AddComponent<Timer>();
         timer.Duration = 1f;
         timer.Run();
@@ -24,6 +26,6 @@ public class AddHealth : MonoBehaviour
             Destroy(this);
             Destroy(timer);
         }
-        transform.localScale += new Vector3(0, RateOfReplenish, 0);
+        transform.localScale += new Vector3(0, rateOfReplenish, 0);
     }
 }

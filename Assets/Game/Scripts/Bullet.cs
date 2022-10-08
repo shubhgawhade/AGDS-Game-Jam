@@ -56,8 +56,6 @@ public class Bullet : Attacks
         {
             collision.collider.GetComponent<AICharacterControl1>().health -= Damage;
             // Destroy(gameObject);
-            
-            
         }
     }
 

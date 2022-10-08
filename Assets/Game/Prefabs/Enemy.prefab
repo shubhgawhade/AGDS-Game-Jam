@@ -150,5 +150,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ba3cfcd7c71653429d0643347bcddaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthDrops: {fileID: 4432916449458794597, guid: 11f84f9a07ebf5e4f91751226149177d,
+    type: 3}
+  character: {fileID: 0}
   health: 100
   target: {fileID: 0}

@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 dir;
     private Rigidbody rb;
 
+    private bool deathLoc;
     public bool move;
     public float movementSpeed;
     public float rotationSpeed;
@@ -58,7 +59,11 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             StartCoroutine(Wait(2f));
-            GameManager.lastDeath.Add(transform.position);
+            if (!deathLoc)
+            {
+                GameManager.lastDeath.Add(transform.position);
+                deathLoc = true;
+            }
             move = false;
             currentDestination = transform.position;
         }
@@ -104,8 +109,9 @@ public class PlayerMovement : MonoBehaviour
     {
         if (other.CompareTag("Health"))
         {
-            other.gameObject.SetActive(false);
-            gameObject.AddComponent<AddHealth>();
+            Destroy(other.gameObject);
+            AddHealth add = gameObject.AddComponent<AddHealth>();
+            add.RateOfReplenish = 0.02f;
         }
     }
 }
