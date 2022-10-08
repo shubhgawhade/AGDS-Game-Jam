@@ -42,11 +42,11 @@ public class Shoot1 : Attacks
                     case 2:
                         if (i == 0)
                         {
-                            print(transform.rotation);
+                            // print(transform.rotation);
                             
                             // rot.y -= 30;
                             rot = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y - 30, transform.eulerAngles.z);
-                            print(rot);
+                            // print(rot);
                         }
                         else
                         {
@@ -58,8 +58,7 @@ public class Shoot1 : Attacks
                 
                 if (!BulletsLeft())
                 {
-                    
-                    print("EXP");
+                    // print("EXP");
                     GameObject a = Instantiate(bullets, transform.position, rot);
                     a.GetComponent<Bullet>().player = transform.root.GetComponent<Rigidbody>();
                     reusableBullets.Add(a);

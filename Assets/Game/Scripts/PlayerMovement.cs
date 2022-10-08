@@ -7,6 +7,8 @@ using Random = UnityEngine.Random;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private GameManager gm;
+    
     [SerializeField] private GameObject mouseLoc;
     
     public Vector3 currentDestination;
@@ -26,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gm = Camera.main.GetComponent<GameManager>();
         rb = GetComponent<Rigidbody>();
         currentDestination = transform.position;
     }
@@ -57,6 +60,8 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            GameManager.isDead = true;
+            GameManager.lastDeath.Add(transform.position);
             move = false;
             currentDestination = transform.position;
         }
