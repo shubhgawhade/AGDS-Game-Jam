@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Bullet : Attacks
 {
+    public Rigidbody player;
+    
     private Rigidbody rb;
 
     public float bulletSpeed;
@@ -19,6 +21,7 @@ public class Bullet : Attacks
         timer = gameObject.AddComponent<Timer>();
         timer.Duration = bulletLife;
         timer.Run();
+        rb.AddForce(player.velocity + transform.forward * bulletSpeed, ForceMode.Impulse);
     }
 
     private void Update()
@@ -31,11 +34,20 @@ public class Bullet : Attacks
 
     void FixedUpdate()
     {
-        rb.AddForce(transform.forward * bulletSpeed, ForceMode.Force);
+        
     }
 
     private void OnTriggerEnter(Collider other)
     {
         // print(other.name);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Enemy"))
+        {
+            collision.collider.GetComponent<EnemyBehaviour>().health -= Damage;
+            Destroy(gameObject);
+        }
     }
 }

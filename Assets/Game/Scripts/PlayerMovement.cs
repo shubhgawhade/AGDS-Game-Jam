@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 currentDestination;
     private float startTime;
     private Vector3 dir;
+    private Rigidbody rb;
 
     public bool move;
     public float movementSpeed;
@@ -25,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
         currentDestination = transform.position;
     }
 
@@ -36,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             // print((hit.point - transform.position).magnitude);
-            if ((hit.point - transform.position).magnitude < 9)
+            if ((hit.point - transform.position).magnitude < 12)
             {
                 mouseLoc.transform.position = hit.point;
             }
@@ -65,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
         dir = currentDestination - transform.position;
         // print(dir.magnitude);
         
-        float distanceTime = (Time.time - startTime) * movementSpeed;
+        float distanceTime = Mathf.Clamp((Time.time - startTime) * movementSpeed, 0, movementSpeed * 3);
         if (dir.magnitude > 0.1f)
         {
             Quaternion targetRotation = Quaternion.LookRotation(dir);
@@ -74,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
             // agent.SetDestination(currentDestination);
 
             transform.position = Vector3.Lerp(transform.position, currentDestination, distanceTime / dir.magnitude);
-            GetComponent<Rigidbody>().MovePosition(transform.position + movementSpeed * Time.deltaTime * dir);
+            rb.MovePosition(transform.position + movementSpeed * Time.deltaTime * dir);
         }
         else
         {

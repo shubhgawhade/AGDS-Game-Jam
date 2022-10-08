@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 3599898836741692526}
   - component: {fileID: 349187528285109489}
   - component: {fileID: 8480091611940691767}
-  m_Layer: 0
-  m_Name: Sphere
-  m_TagString: Untagged
+  m_Layer: 9
+  m_Name: PlayerBullets
+  m_TagString: PlayerBullets
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -93,8 +93,8 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3599898836741692521}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_Material: {fileID: 13400000, guid: 0cce67a24a4042b47b41a42b3c52b91b, type: 2}
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
@@ -128,6 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NumOfBullets: 0
-  Damage: 0
-  bulletSpeed: 150
+  Damage: 50
+  player: {fileID: 0}
+  bulletSpeed: 30
   bulletLife: 1

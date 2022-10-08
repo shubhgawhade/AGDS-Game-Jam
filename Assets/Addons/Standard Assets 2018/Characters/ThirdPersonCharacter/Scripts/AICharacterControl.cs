@@ -34,7 +34,11 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
         private void Update()
         {
-            agent.SetDestination(target.position);
+            if (agent.updatePosition)
+            {
+                agent.SetDestination(target.position);
+            }
+            
             character.Move(agent.desiredVelocity, false, false);
         }
     }

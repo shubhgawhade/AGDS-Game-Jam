@@ -27,7 +27,9 @@ public class Shoot1 : MonoBehaviour
     {
         if (!spawned)
         {
-            Instantiate(bullets, transform.position, transform.rotation);
+            GameObject a = Instantiate(bullets, transform.position, transform.rotation);
+            a.GetComponent<Bullet>().player = transform.root.GetComponent<Rigidbody>();
+            
             spawned = true;
 
             timer.Duration = 1f;
