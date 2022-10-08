@@ -7,34 +7,41 @@ public class Bullet : Attacks
 {
     public Rigidbody player;
     
-    private Rigidbody rb;
+    public Rigidbody rb;
 
     public float bulletSpeed;
     public float bulletLife;
     
     private Timer timer;
-
-    // Start is called before the first frame update
-    void Start()
+    
+    private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
         timer = gameObject.AddComponent<Timer>();
+        rb = GetComponent<Rigidbody>();
+    }
+
+    private void Start()
+    {
+        rb.AddForce(player.velocity + transform.forward * bulletSpeed, ForceMode.Impulse);
+    }
+
+    private void OnEnable()
+    {
+        if (player != null)
+        {
+            rb.AddForce(player.velocity + transform.forward * bulletSpeed, ForceMode.Impulse);
+        }
         timer.Duration = bulletLife;
         timer.Run();
-        rb.AddForce(player.velocity + transform.forward * bulletSpeed, ForceMode.Impulse);
     }
 
     private void Update()
     {
         if (timer.Finished)
         {
-            Destroy(gameObject);
+            // Destroy(gameObject);
+            gameObject.SetActive(false);
         }
-    }
-
-    void FixedUpdate()
-    {
-        
     }
 
     private void OnTriggerEnter(Collider other)
@@ -47,7 +54,14 @@ public class Bullet : Attacks
         if (collision.collider.CompareTag("Enemy"))
         {
             collision.collider.GetComponent<EnemyBehaviour>().health -= Damage;
-            Destroy(gameObject);
+            // Destroy(gameObject);
         }
+    }
+
+    private void OnDisable()
+    {
+        timer.started = false;
+        rb.velocity = Vector3.zero;
+        transform.rotation = Quaternion.identity;
     }
 }

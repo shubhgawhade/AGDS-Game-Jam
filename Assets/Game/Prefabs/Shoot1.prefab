@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullets: {fileID: 3599898836741692521, guid: 9c861d495f7edbd44b32d97d783b5431, type: 3}
+  reusableBullets: []

@@ -3,10 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shoot1 : MonoBehaviour
+public class Shoot1 : Attacks
 {
     [SerializeField] private GameObject bullets;
 
+    [SerializeField] private List<GameObject> reusableBullets;
+    
     private Timer timer;
 
     private bool spawned;
@@ -19,7 +21,7 @@ public class Shoot1 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        NumOfBullets = 2;
     }
 
     // Update is called once per frame
@@ -27,11 +29,55 @@ public class Shoot1 : MonoBehaviour
     {
         if (!spawned)
         {
-            GameObject a = Instantiate(bullets, transform.position, transform.rotation);
-            a.GetComponent<Bullet>().player = transform.root.GetComponent<Rigidbody>();
+            
+            for (int i = 0; i < NumOfBullets; i++)
+            {
+                Quaternion rot = transform.rotation;
+                switch (NumOfBullets)
+                {
+                    case 1:
+                        // rot = transform.rotation;
+                        break;
+                        
+                    case 2:
+                        if (i == 0)
+                        {
+                            // rot.y -= 30;
+                            // rot = Quaternion.Euler(transform.rotation.x, transform.rotation.y - 30, transform.rotation.z);
+                        }
+                        else
+                        {
+                            // rot.y += 30;
+                            // rot = Quaternion.Euler(transform.rotation.x, transform.rotation.y + 30, transform.rotation.z);
+                        }
+                        break;
+                }
+                
+                if (!BulletsLeft())
+                {
+                    
+                    print("EXP");
+                    GameObject a = Instantiate(bullets, transform.position, rot);
+                    a.GetComponent<Bullet>().player = transform.root.GetComponent<Rigidbody>();
+                    reusableBullets.Add(a);
+                }
+                else
+                {
+                    foreach (GameObject a in reusableBullets)
+                    {
+                        if (!a.activeSelf)
+                        {
+                            a.GetComponent<Bullet>().player = transform.root.GetComponent<Rigidbody>();
+                            a.transform.position = transform.position;
+                            a.transform.rotation = rot;
+                            a.SetActive(true);
+                            break;
+                        }
+                    }
+                }
+            }
             
             spawned = true;
-
             timer.Duration = 1f;
             timer.Run();
         }
@@ -45,4 +91,18 @@ public class Shoot1 : MonoBehaviour
             }
         }
     }
+
+    private bool BulletsLeft()
+    {
+        foreach (GameObject a in reusableBullets)
+        {
+            if (!a.activeSelf)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    
 }
