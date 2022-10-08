@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.Characters.ThirdPerson;
 
 public class Bullet : Attacks
 {
@@ -51,10 +52,12 @@ public class Bullet : Attacks
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.CompareTag("Enemy"))
+        if (collision.collider.CompareTag("Robot") || collision.collider.CompareTag("Enemy"))
         {
-            collision.collider.GetComponent<EnemyBehaviour>().health -= Damage;
+            collision.collider.GetComponent<AICharacterControl1>().health -= Damage;
             // Destroy(gameObject);
+            
+            
         }
     }
 

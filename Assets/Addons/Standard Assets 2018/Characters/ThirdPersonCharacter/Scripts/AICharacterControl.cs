@@ -1,16 +1,13 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace UnityStandardAssets.Characters.ThirdPerson
 {
-    [RequireComponent(typeof(UnityEngine.AI.NavMeshAgent))]
-    [RequireComponent(typeof(ThirdPersonCharacter))]
     public class AICharacterControl : MonoBehaviour
     {
-        [SerializeField] private GameObject aiController;
-
-
+        private AISpawner ais;
         private Animator anim;
 
         public UnityEngine.AI.NavMeshAgent
@@ -21,6 +18,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
         private void Start()
         {
+            ais = Camera.main.GetComponent<AISpawner>();
             anim = GetComponent<Animator>();
 
             // get the components on the object we need ( should not be null due to require component so no need to check )
@@ -34,12 +32,19 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
         private void Update()
         {
+            if (!target)
+            {
+                target = ais.patrolLocs[Random.Range(0, ais.patrolLocs.Length)];
+                print("A");
+            }
+            
             if (agent.updatePosition)
             {
                 agent.SetDestination(target.position);
             }
             
             character.Move(agent.desiredVelocity, false, false);
+
         }
     }
 }

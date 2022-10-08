@@ -21,7 +21,7 @@ public class Shoot1 : Attacks
     // Start is called before the first frame update
     void Start()
     {
-        NumOfBullets = 2;
+        NumOfBullets = 3;
     }
 
     // Update is called once per frame

@@ -8,6 +8,7 @@ TagManager:
   - Health
   - PlayerBullets
   - Enemy
+  - Robot
   layers:
   - Default
   - TransparentFX

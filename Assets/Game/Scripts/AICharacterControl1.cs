@@ -1,34 +1,34 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityStandardAssets.Characters.ThirdPerson;
 using Random = UnityEngine.Random;
 
-public class EnemyBehaviour : MonoBehaviour
+public class AICharacterControl1 : MonoBehaviour
 {
-    private Timer timer;
+    public ThirdPersonCharacter character;
     private AISpawner ais;
-    private AICharacterControl aicc;
-    
     public int health;
-    public Transform target;
     
     private Rigidbody rb;
-    public NavMeshAgent agent { get; private set; }
-    
-    // Start is called before the first frame update
-    void Start()
+    private Timer timer;
+
+    public UnityEngine.AI.NavMeshAgent
+        agent { get; private set; } // the navmesh agent required for the
+                                    // // the character we are controlling
+    public Transform target; // target to aim for
+
+    private void Start()
     {
+        if (GetComponent<ThirdPersonCharacter>())
+        {
+            character = GetComponent<ThirdPersonCharacter>();
+        }
+        
         rb = GetComponent<Rigidbody>();
         timer = gameObject.AddComponent<Timer>();
-        
         ais = Camera.main.GetComponent<AISpawner>();
-        if (gameObject.GetComponent<AICharacterControl>() != null)
-        {
-            aicc = GetComponent<AICharacterControl>();
-        }
 
         // get the components on the object we need ( should not be null due to require component so no need to check )
         agent = GetComponentInChildren<NavMeshAgent>();
@@ -37,14 +37,9 @@ public class EnemyBehaviour : MonoBehaviour
         agent.updatePosition = true;
     }
 
-    // Update is called once per frame
-    void Update()
+
+    private void Update()
     {
-        if (aicc)
-        {
-            target = aicc.target;
-        }
-        
         if (health < 1)
         {
             health = 100;
@@ -55,8 +50,8 @@ public class EnemyBehaviour : MonoBehaviour
         if (timer.Finished)
         {
             timer.started = false;
+            agent.updatePosition = true;
             GetComponent<NavMeshAgent>().enabled = true;
-            GetComponent<AICharacterControl>().agent.updatePosition = true;
         }
         
         
@@ -70,23 +65,28 @@ public class EnemyBehaviour : MonoBehaviour
                     
             }
         }
+
+        if (GetComponent<ThirdPersonCharacter>())
+        {
+            character.Move(agent.desiredVelocity, false, false);
+        }
             
         if (agent.updatePosition)
         {
             agent.SetDestination(target.position);
         }
     }
-
+    
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.CompareTag("PlayerBullets"))
         {
             GetComponent<NavMeshAgent>().enabled = false;
-            GetComponent<AICharacterControl>().agent.updatePosition = false;
+            agent.updatePosition = false;
             timer.Duration = 1f;
             timer.Run();
             rb.velocity = Vector3.zero;
-            rb.AddForce(Vector3.back * 20, ForceMode.Impulse);
+            // rb.AddForce(Vector3.back * 20, ForceMode.Impulse);
         }
     }
 }
