@@ -50,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             // print((hit.point - transform.position).magnitude);
-            if ((hit.point - transform.position).magnitude < 12)
+            if ((hit.point - transform.position).magnitude < 15)
             {
                 mouseLoc.transform.position = new Vector3(hit.point.x, 0, hit.point.z);
                 // mouseLoc.transform.position = hit.point;

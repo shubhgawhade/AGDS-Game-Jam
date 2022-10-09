@@ -42,7 +42,7 @@ public class AICharacterControl1 : MonoBehaviour
         // get the components on the object we need ( should not be null due to require component so no need to check )
         agent = GetComponent<NavMeshAgent>();
 
-        agent.updateRotation = false;
+        agent.updateRotation = true;
         agent.updatePosition = true;
     }
 
