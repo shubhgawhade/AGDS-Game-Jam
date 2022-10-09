@@ -34,8 +34,14 @@ public class GameManager : MonoBehaviour
         
         if (isDead)
         {
-            firstRun = false;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            StartCoroutine(Wait(2f));
         }   
+    }
+
+    IEnumerator Wait(float time)
+    {
+        yield return new WaitForSeconds(time);
+        firstRun = false;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

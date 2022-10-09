@@ -27,7 +27,7 @@ public class Shoot1 : Attacks
     // Update is called once per frame
     void LateUpdate()
     {
-        if (!spawned)
+        if (!spawned && !GameManager.isDead)
         {
             
             for (int i = 0; i < NumOfBullets; i++)

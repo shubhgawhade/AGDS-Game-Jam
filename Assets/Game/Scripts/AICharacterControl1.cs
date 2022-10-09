@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 public class AICharacterControl1 : MonoBehaviour
 {
     [SerializeField] private GameObject healthDrops;
+    [SerializeField] private GameObject player;
     
     public ThirdPersonCharacter character;
     private AISpawner ais;
@@ -52,6 +53,7 @@ public class AICharacterControl1 : MonoBehaviour
         {
             timer.started = false;
             agent.updatePosition = true;
+            target = player.transform;
             GetComponent<NavMeshAgent>().enabled = true;
         }
         
@@ -82,6 +84,7 @@ public class AICharacterControl1 : MonoBehaviour
     {
         if (collision.collider.CompareTag("PlayerBullets"))
         {
+            player = collision.gameObject.GetComponent<Bullet>().player.gameObject;
             GetComponent<NavMeshAgent>().enabled = false;
             agent.updatePosition = false;
             timer.Duration = 1f;

@@ -55,7 +55,7 @@ public class Bullet : Attacks
         if (collision.collider.CompareTag("Robot") || collision.collider.CompareTag("Enemy"))
         {
             collision.collider.GetComponent<AICharacterControl1>().health -= Damage;
-            // Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 

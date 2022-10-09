@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     public float movementSpeed;
     public float rotationSpeed;
     public float rateOfLoss;
+    public float damageRate;
 
     private NavMeshAgent agent;
     
@@ -41,10 +42,11 @@ public class PlayerMovement : MonoBehaviour
             // print((hit.point - transform.position).magnitude);
             if ((hit.point - transform.position).magnitude < 12)
             {
-                mouseLoc.transform.position = hit.point;
+                mouseLoc.transform.position = new Vector3(hit.point.x, 0, hit.point.z);
+                // mouseLoc.transform.position = hit.point;
             }
             
-            if (Input.GetMouseButtonDown(0) && hit.collider.CompareTag("Ground"))
+            if (Input.GetMouseButtonDown(0) && !hit.collider.CompareTag("NotWalkable"))
             {
                 move = true;
                 currentDestination = new Vector3(hit.point.x, 0, hit.point.z);
@@ -58,7 +60,6 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            StartCoroutine(Wait(2f));
             if (!deathLoc)
             {
                 GameManager.lastDeath.Add(transform.position);
@@ -66,14 +67,8 @@ public class PlayerMovement : MonoBehaviour
             }
             move = false;
             currentDestination = transform.position;
+            GameManager.isDead = true;
         }
-    }
-
-
-    IEnumerator Wait(float time)
-    {
-        yield return new WaitForSeconds(time);
-        GameManager.isDead = true;
     }
 
     private void Move()
@@ -107,11 +102,24 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Health"))
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+            print(collision.collider.name);
+        if (collision.collider.CompareTag("Health"))
         {
-            Destroy(other.gameObject);
+            Destroy(collision.collider.gameObject);
             AddHealth add = gameObject.AddComponent<AddHealth>();
             add.RateOfReplenish = 0.02f;
+        }
+    }
+
+    private void OnCollisionStay(Collision collisionInfo)
+    {
+        if (collisionInfo.collider.CompareTag("Enemy") || collisionInfo.collider.CompareTag("Robot") && transform.localScale.y > 0.1f)
+        {
+            transform.localScale -= new Vector3(0, damageRate, 0);
         }
     }
 }
