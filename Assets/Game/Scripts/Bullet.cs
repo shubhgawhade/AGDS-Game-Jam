@@ -6,6 +6,8 @@ using UnityStandardAssets.Characters.ThirdPerson;
 
 public class Bullet : Attacks
 {
+    [SerializeField] private GameObject explosionEffect;
+    
     public Rigidbody player;
     
     public Rigidbody rb;
@@ -56,6 +58,7 @@ public class Bullet : Attacks
         {
             collision.collider.GetComponent<AICharacterControl1>().health -= Damage;
             gameObject.SetActive(false);
+            Instantiate(explosionEffect, transform.position, Quaternion.identity);
         }
     }
 

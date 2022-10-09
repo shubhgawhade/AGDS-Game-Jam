@@ -7,6 +7,8 @@ using Random = UnityEngine.Random;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] private GameObject explosionEffect;
+
     public static GameObject Player;
     
     [SerializeField] private GameObject mouseLoc;
@@ -130,6 +132,7 @@ public class PlayerMovement : MonoBehaviour
         {
             collision.gameObject.SetActive(false);
             transform.localScale -= new Vector3(0, 0.003f, 0);
+            Instantiate(explosionEffect, transform.position, Quaternion.identity);
         }
     }
 

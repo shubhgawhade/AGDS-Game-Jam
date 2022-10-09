@@ -53058,6 +53058,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 255c6afed880a7445ad6a8da7e7a8198, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosionEffect: {fileID: 2433282508537954060, guid: 3ef3ae421f71c5c4e97fe12dc2fc6312,
+    type: 3}
   mouseLoc: {fileID: 509141810}
   currentDestination: {x: 0, y: 0, z: 0}
   move: 0
