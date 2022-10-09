@@ -86,6 +86,7 @@ public class AICharacterControl1 : MonoBehaviour
         {
             player = collision.gameObject.GetComponent<Bullet>().player.gameObject;
             GetComponent<NavMeshAgent>().enabled = false;
+            target = null;
             agent.updatePosition = false;
             timer.Duration = 1f;
             timer.Run();
