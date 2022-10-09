@@ -91,7 +91,7 @@ public class AICharacterControl1 : MonoBehaviour
         {
             target = ais.patrolLocs[Random.Range(0, ais.patrolLocs.Length)];
             agent.updatePosition = true;
-            print("A");
+            // print("A");
         }
         else
         {

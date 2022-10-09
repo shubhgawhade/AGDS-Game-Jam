@@ -22,12 +22,15 @@ public class PlayerMovement : MonoBehaviour
     public float damageRate;
 
     private NavMeshAgent agent;
+
+    private Vector3 startPos;
     
     RaycastHit hit;
     
     // Start is called before the first frame update
     void Start()
     {
+        startPos = transform.position;
         rb = GetComponent<Rigidbody>();
         currentDestination = transform.position;
     }
@@ -63,6 +66,8 @@ public class PlayerMovement : MonoBehaviour
             if (!deathLoc)
             {
                 GameManager.lastDeath.Add(transform.position);
+                GameManager.DistanceTravelled = Mathf.Abs((startPos - transform.position).magnitude);
+                print(GameManager.DistanceTravelled);
                 deathLoc = true;
             }
             move = false;

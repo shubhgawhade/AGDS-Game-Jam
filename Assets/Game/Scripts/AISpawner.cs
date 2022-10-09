@@ -30,7 +30,7 @@ public class AISpawner : MonoBehaviour
         if (spawnAI)
         {
             Transform loc = spawnPoints[Random.Range(0, spawnPoints.Length)];
-            print(loc);
+            // print(loc);
             
             if (!VisibleInViewport(loc))
             {
@@ -72,7 +72,7 @@ public class AISpawner : MonoBehaviour
     private bool VisibleInViewport(Transform loc)
     {
         Vector3 respectToCamera = Camera.main.WorldToViewportPoint(loc.position);
-        print(respectToCamera);
+        // print(respectToCamera);
         if (respectToCamera.x > 0 && respectToCamera.y > 0)
         {
             return true;

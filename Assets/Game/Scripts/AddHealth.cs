@@ -12,7 +12,7 @@ public class AddHealth : MonoBehaviour
     void Start()
     {
         rateOfReplenish = RateOfReplenish;
-        print(rateOfReplenish);
+        // print(rateOfReplenish);
         timer = gameObject.AddComponent<Timer>();
         timer.Duration = 1f;
         timer.Run();
