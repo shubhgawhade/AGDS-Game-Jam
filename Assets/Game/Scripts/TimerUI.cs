@@ -28,7 +28,7 @@ public class TimerUI : MonoBehaviour
         if (!GameManager.isDead)
         {
             time += Time.deltaTime;
-            timerUI.text = time.ToString("#00:00.00 s");
+            timerUI.text = time.ToString("#00:00.00s");
         }
     }
 }

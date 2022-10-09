@@ -23,11 +23,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI distanceText;
     [SerializeField] private TextMeshProUGUI timeCounter;
 
-    private void Awake()
-    {
-        Time.timeScale = 0;
-    }
-
     // Start is called before the first frame update
     void Start()
     {
