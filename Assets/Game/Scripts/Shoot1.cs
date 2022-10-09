@@ -21,7 +21,18 @@ public class Shoot1 : Attacks
     // Start is called before the first frame update
     void Start()
     {
-        NumOfBullets = 3;
+        if (gameObject.CompareTag("Enemy"))
+        {
+            NumOfBullets = 1;
+        }
+        else if (gameObject.CompareTag("Robot"))
+        {
+            NumOfBullets = 0;
+        }
+        else
+        {
+            NumOfBullets = 3;
+        }
     }
 
     // Update is called once per frame
@@ -49,6 +60,22 @@ public class Shoot1 : Attacks
                             // print(rot);
                         }
                         else
+                        {
+                            // rot.y += 30;
+                            rot = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y + 30, transform.eulerAngles.z);
+                        }
+                        break;
+                    
+                    case 3:
+                        if (i == 0)
+                        {
+                            // print(transform.rotation);
+                            
+                            // rot.y -= 30;
+                            rot = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y - 30, transform.eulerAngles.z);
+                            // print(rot);
+                        }
+                        else if(i == 2)
                         {
                             // rot.y += 30;
                             rot = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y + 30, transform.eulerAngles.z);

@@ -7,6 +7,8 @@ using Random = UnityEngine.Random;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public static GameObject Player;
+    
     [SerializeField] private GameObject mouseLoc;
     
     public Vector3 currentDestination;
@@ -26,7 +28,12 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 startPos;
     
     RaycastHit hit;
-    
+
+    private void Awake()
+    {
+        Player = gameObject;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -118,6 +125,12 @@ public class PlayerMovement : MonoBehaviour
             AddHealth add = gameObject.AddComponent<AddHealth>();
             add.RateOfReplenish = 0.02f;
         }
+        
+        if(collision.collider.CompareTag("EnemyBullets"))
+        {
+            collision.gameObject.SetActive(false);
+            transform.localScale -= new Vector3(0, 0.003f, 0);
+        }
     }
 
     private void OnCollisionStay(Collision collisionInfo)
@@ -126,5 +139,6 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.localScale -= new Vector3(0, damageRate, 0);
         }
+        
     }
 }

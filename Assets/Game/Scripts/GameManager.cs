@@ -11,17 +11,19 @@ public class GameManager : MonoBehaviour
  
     public static bool isDead;
     public static List<Vector3> lastDeath = new List<Vector3>();
-
     public static bool firstRun = true;
-
     public static float DistanceTravelled;
     public static float MaxDistanceTravelled;
     public static float MaxTimeSurvived;
+
+
+    private bool wait;
 
     [SerializeField] private GameObject gameOverUI;
     [SerializeField] private TextMeshProUGUI timeSurvivedText;
     [SerializeField] private TextMeshProUGUI distanceText;
     [SerializeField] private TextMeshProUGUI timeCounter;
+    [SerializeField] private GameObject timeCounterBG;
 
     // Start is called before the first frame update
     void Start()
@@ -47,11 +49,12 @@ public class GameManager : MonoBehaviour
         {
             gameOverUI.SetActive(true);
             timeCounter.gameObject.SetActive(false);
+            timeCounterBG.gameObject.SetActive(false);
             timeSurvivedText.text = "Time Survived: " + timeCounter.text;
             distanceText.text = "Distance Travelled: " + DistanceTravelled.ToString(".00m");
             
-            // StartCoroutine(Wait(5f));
-            if (Input.GetMouseButtonDown(0))
+            StartCoroutine(Wait(1f));
+            if (Input.GetMouseButtonDown(0) && wait)
             {
                 firstRun = false;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -62,7 +65,6 @@ public class GameManager : MonoBehaviour
     IEnumerator Wait(float time)
     {
         yield return new WaitForSeconds(time);
-        firstRun = false;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        wait = true;
     }
 }

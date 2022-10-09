@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4067513144375666436}
   - component: {fileID: 4067513144350332910}
   - component: {fileID: -585412055329006178}
+  - component: {fileID: 4811356939117233008}
   m_Layer: 10
   m_Name: AIThirdPersonController
   m_TagString: Robot
@@ -157,6 +158,22 @@ MonoBehaviour:
   character: {fileID: 0}
   health: 100
   target: {fileID: 0}
+--- !u!114 &4811356939117233008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4067513144356166336}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d07775c5d9d3aee4eb52221bd0d668e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NumOfBullets: 1
+  Damage: 0
+  bullets: {fileID: 3599898836741692521, guid: eb479f775550d58459e35e6ccbdbf62f, type: 3}
+  reusableBullets: []
 --- !u!1001 &4067513142717860657
 PrefabInstance:
   m_ObjectHideFlags: 0

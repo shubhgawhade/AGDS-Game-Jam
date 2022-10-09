@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - Robot
   - NotWalkable
+  - EnemyBullets
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - PlayerBullets
   - Enemy
   - Grave
-  - 
+  - EnemyBullets
   - 
   - 
   - 

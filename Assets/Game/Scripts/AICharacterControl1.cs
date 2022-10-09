@@ -7,6 +7,8 @@ using Random = UnityEngine.Random;
 
 public class AICharacterControl1 : MonoBehaviour
 {
+    private Shoot1 shoot;
+    
     [SerializeField] private GameObject healthDrops;
     [SerializeField] private GameObject player;
     
@@ -22,8 +24,12 @@ public class AICharacterControl1 : MonoBehaviour
                                     // // the character we are controlling
     public Transform target; // target to aim for
 
+
     private void Start()
     {
+        player = PlayerMovement.Player;
+        shoot = GetComponent<Shoot1>();
+
         if (GetComponent<ThirdPersonCharacter>())
         {
             character = GetComponent<ThirdPersonCharacter>();
@@ -47,6 +53,7 @@ public class AICharacterControl1 : MonoBehaviour
 
     private void Update()
     {
+
         /*
         if (dist < 8)
         {
@@ -94,11 +101,15 @@ public class AICharacterControl1 : MonoBehaviour
             // print("A");
         }
         else
-        {
+        { 
+            float distFromPlayer = (player.transform.position - transform.position).magnitude;
+            
             if (target.gameObject != player)
             {
+                shoot.enabled = false;
+
                 float dist = (target.transform.position - transform.position).magnitude;
-                if (dist < 1f && target != player)
+                if (dist < 1f)
                 {
                     print("SWITCH" + "" + target);
                     if (gameObject.activeSelf)
@@ -106,10 +117,37 @@ public class AICharacterControl1 : MonoBehaviour
                         StartCoroutine(Wait());
                     }
                 }
+
+                if (distFromPlayer < 12)
+                {
+                    target = player.transform;
+                }
+                
             }
             else
             {
                 // Stop and attack player when in range
+                if (player != null && health > 0)
+                {
+                    
+                    // print(distFromPlayer);
+                    if (distFromPlayer > 7 && distFromPlayer < 8)
+                    {
+                        target = player.transform;
+                        StartCoroutine(WaitBeforeAttack());
+                    }
+                    else if(distFromPlayer > 8)
+                    {
+                        print("LEAVE");
+                        shoot.enabled = false;
+                        
+                        if (distFromPlayer > 12)
+                        {
+                            target = ais.patrolLocs[Random.Range(0, ais.patrolLocs.Length)];
+                        }
+                    }
+                }
+                
             }
         }
 
@@ -122,6 +160,27 @@ public class AICharacterControl1 : MonoBehaviour
         {
             agent.SetDestination(target.position);
         }
+    }
+
+    IEnumerator WaitBeforeAttack()
+    {
+        yield return new WaitForSeconds(0.5f);
+        GetComponent<NavMeshAgent>().enabled = false;
+        agent.updatePosition = false;
+        Shoot();
+    }
+
+    private void Shoot()
+    {
+        if (gameObject.CompareTag("Enemy"))
+        {
+            print(gameObject);
+            transform.LookAt(target);
+            shoot.enabled = true;
+        }
+
+        GetComponent<NavMeshAgent>().enabled = true;
+        agent.updatePosition = true;
     }
 
     IEnumerator Wait()
