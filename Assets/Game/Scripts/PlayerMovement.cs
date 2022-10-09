@@ -76,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
         dir = currentDestination - transform.position;
         // print(dir.magnitude);
         
-        float distanceTime = Mathf.Clamp((Time.time - startTime) * movementSpeed, 0, movementSpeed * 3);
+        float distanceTime = Mathf.Clamp((Time.time - startTime) * movementSpeed, 0, movementSpeed * 2);
         if (dir.magnitude > 0.1f)
         {
             Quaternion targetRotation = Quaternion.LookRotation(dir);
@@ -106,7 +106,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-            print(collision.collider.name);
+        // print(collision.collider.name);
         if (collision.collider.CompareTag("Health"))
         {
             Destroy(collision.collider.gameObject);

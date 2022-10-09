@@ -44,7 +44,7 @@ public class AISpawner : MonoBehaviour
                 }
                 else
                 {
-                    print("ADD");
+                    // print("ADD");
                     foreach (GameObject a in spawnedRobots)
                     {
                         if (!a.activeSelf)
@@ -77,8 +77,12 @@ public class AISpawner : MonoBehaviour
         {
             return true;
         }
+        else if (respectToCamera.x < 0 && respectToCamera.x > -0.8f)
+        {
+            return false;
+        }
 
-        return false;
+        return true;
     }
     
     private bool RobotsLeft()

@@ -16,6 +16,7 @@ public class AICharacterControl1 : MonoBehaviour
     
     private Rigidbody rb;
     private Timer timer;
+    private bool isAttacking;
 
     public NavMeshAgent agent { get; private set; } // the navmesh agent required for the
                                     // // the character we are controlling
@@ -33,15 +34,43 @@ public class AICharacterControl1 : MonoBehaviour
         ais = Camera.main.GetComponent<AISpawner>();
 
         // get the components on the object we need ( should not be null due to require component so no need to check )
-        agent = GetComponentInChildren<NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
 
         agent.updateRotation = false;
         agent.updatePosition = true;
     }
 
+    private void OnEnable()
+    {
+        target = null;
+    }
 
     private void Update()
     {
+        /*
+        if (dist < 8)
+        {
+            isAttacking = true;
+            agent.updatePosition = false;
+        }
+        else if (isAttacking && dist < 12)
+        {
+            target = player.transform;
+            isAttacking = false;
+        }
+        */
+
+        if (target)
+        {
+            float dist = (target.transform.position - transform.position).magnitude;
+            if (dist < 1f)
+            {
+                agent.updatePosition = false;
+                target = null;
+            }
+        }
+
+        
         if (health < 1)
         {
             health = 100;
@@ -61,12 +90,8 @@ public class AICharacterControl1 : MonoBehaviour
         if (!target)
         {
             target = ais.patrolLocs[Random.Range(0, ais.patrolLocs.Length)];
+            agent.updatePosition = true;
             print("A");
-
-            if ((target.transform.position - transform.position).magnitude < 1)
-            {
-                    
-            }
         }
 
         if (GetComponent<ThirdPersonCharacter>())
@@ -74,7 +99,7 @@ public class AICharacterControl1 : MonoBehaviour
             character.Move(agent.desiredVelocity, false, false);
         }
             
-        if (agent.updatePosition)
+        if (agent.updatePosition && GetComponent<NavMeshAgent>().enabled)
         {
             agent.SetDestination(target.position);
         }
@@ -86,7 +111,6 @@ public class AICharacterControl1 : MonoBehaviour
         {
             player = collision.gameObject.GetComponent<Bullet>().player.gameObject;
             GetComponent<NavMeshAgent>().enabled = false;
-            target = null;
             agent.updatePosition = false;
             timer.Duration = 1f;
             timer.Run();
@@ -96,7 +120,10 @@ public class AICharacterControl1 : MonoBehaviour
     }
 
     private void OnDisable()
-    {
+    { 
+        timer.started = false;
+        GetComponent<NavMeshAgent>().enabled = true;
+
         if (!GameManager.isDead)
         {
             Instantiate(healthDrops, transform.position, Quaternion.identity);
