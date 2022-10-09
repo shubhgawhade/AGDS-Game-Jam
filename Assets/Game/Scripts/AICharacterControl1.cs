@@ -71,7 +71,6 @@ public class AICharacterControl1 : MonoBehaviour
         }
         */
 
-        
         if (health < 1)
         {
             health = 100;
@@ -94,6 +93,25 @@ public class AICharacterControl1 : MonoBehaviour
             agent.updatePosition = true;
             print("A");
         }
+        else
+        {
+            if (target.gameObject != player)
+            {
+                float dist = (target.transform.position - transform.position).magnitude;
+                if (dist < 1f && target != player)
+                {
+                    print("SWITCH" + "" + target);
+                    if (gameObject.activeSelf)
+                    {
+                        StartCoroutine(Wait());
+                    }
+                }
+            }
+            else
+            {
+                // Stop and attack player when in range
+            }
+        }
 
         if (GetComponent<ThirdPersonCharacter>())
         {
@@ -104,6 +122,13 @@ public class AICharacterControl1 : MonoBehaviour
         {
             agent.SetDestination(target.position);
         }
+    }
+
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(1f);
+        agent.updatePosition = false;
+        target = null;
     }
     
     private void OnCollisionEnter(Collision collision)
