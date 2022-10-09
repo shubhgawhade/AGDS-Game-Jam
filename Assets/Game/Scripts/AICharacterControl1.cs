@@ -58,17 +58,18 @@ public class AICharacterControl1 : MonoBehaviour
             target = player.transform;
             isAttacking = false;
         }
-        */
 
         if (target)
         {
             float dist = (target.transform.position - transform.position).magnitude;
-            if (dist < 1f)
+            if (dist < 1f && target != player)
             {
+            print("SWITCH" + "" + target);
                 agent.updatePosition = false;
                 target = null;
             }
         }
+        */
 
         
         if (health < 1)
