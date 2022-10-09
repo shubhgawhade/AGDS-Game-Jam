@@ -138,7 +138,7 @@ public class AICharacterControl1 : MonoBehaviour
                     }
                     else if(distFromPlayer > 8)
                     {
-                        print("LEAVE");
+                        // print("LEAVE");
                         shoot.enabled = false;
                         
                         if (distFromPlayer > 12)

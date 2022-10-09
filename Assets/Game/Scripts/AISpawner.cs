@@ -77,7 +77,9 @@ public class AISpawner : MonoBehaviour
         {
             return true;
         }
-        else if (respectToCamera.x < 0 && respectToCamera.x > -0.8f)
+
+        print(respectToCamera.x);
+        if (respectToCamera.x < 0 && respectToCamera.x > -0.8f)
         {
             return false;
         }
